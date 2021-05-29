@@ -20,13 +20,17 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import com.lonkoski.minhasFinancas.model.enums.StatusLancamento;
 import com.lonkoski.minhasFinancas.model.enums.TipoLancamento;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity 
 @Table(name = "lancamento", schema = "financas")
 @Builder
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Lancamento {
 		
 	@Id
@@ -35,7 +39,7 @@ public class Lancamento {
 	private Long id;
 	
 	@Column ( name = "descriao")
-	private Integer descricao;
+	private String descricao;
 
 	@Column ( name = "mes")
 	private Integer mes;
@@ -61,5 +65,4 @@ public class Lancamento {
 	@Column ( name = "status" )
 	@Enumerated( value = EnumType.STRING )
 	private StatusLancamento status;
-	
 }
