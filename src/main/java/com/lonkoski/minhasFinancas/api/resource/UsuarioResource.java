@@ -15,16 +15,14 @@ import com.lonkoski.minhasFinancas.model.entity.Usuario;
 import com.lonkoski.minhasFinancas.service.UsuarioService;
 
 import ch.qos.logback.core.status.Status;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuarios")
+@RequiredArgsConstructor
 public class UsuarioResource {
 	
-	private UsuarioService service;
-	
-	public UsuarioResource(UsuarioService service) {
-		this.service = service;
-	}
+	private final UsuarioService service;
 	
 	@PostMapping( "/autenticar" )
 	public ResponseEntity autenticar( @RequestBody UsuarioDTO dto ) {
