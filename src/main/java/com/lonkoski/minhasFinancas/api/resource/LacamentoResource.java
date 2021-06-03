@@ -83,6 +83,27 @@ public class LacamentoResource {
 			new ResponseEntity<>("Lancaento não encontrado na base de dados.", HttpStatus.BAD_REQUEST ) );
 	}
 	
+	@PutMapping( "{id}/atualiza-status" )
+	public ResponseEntity atualizarStatus( @PathVariable("id") Long id, @RequestBody LancamentoDTO dto ) {
+		return service.obterPorId(id).map( entity -> {
+			StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+			
+			if ( statusSelecionado == null ) {
+				return ResponseEntity.badRequest().body("Não foi possivel atualizar o status do lancamento, envie um status valido.");
+			}
+			
+			try {
+				entity.setStatus(statusSelecionado);
+				service.atualizar(entity);
+				return ResponseEntity.ok(entity);
+			}catch (RegraNegocioException e ) {
+				return ResponseEntity.badRequest().body(e.getMessage());
+			}
+			
+		}).orElseGet( () ->
+		new ResponseEntity<>("Lancaento não encontrado na base de dados.", HttpStatus.BAD_REQUEST ) ); 
+	}
+	
 	@DeleteMapping( "{id}" )
 	public ResponseEntity deletar( @PathVariable("id") Long  id ) {
 		return service.obterPorId(id).map( entidade -> {
